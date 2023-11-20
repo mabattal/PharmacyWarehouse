@@ -13,6 +13,7 @@ namespace Pharmacy.Service.Mapping
             CreateMap<SuplierUpdateDto, Suplier>();
             CreateMap<MedicineUpdateDto, Medicine>();
             CreateMap<Medicine, MedicineWithSuplierDto>();
+            CreateMap<Suplier, SuplierWithMedicinesDto>();
         }
     }
 }
