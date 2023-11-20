@@ -12,6 +12,7 @@ using FluentValidation.AspNetCore;
 using Pharmacy.Service.Validations;
 using Pharmacy.API.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCustomException();
 
 app.UseAuthorization();
 
