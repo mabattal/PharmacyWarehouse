@@ -12,6 +12,9 @@ using FluentValidation.AspNetCore;
 using Pharmacy.Service.Validations;
 using Pharmacy.API.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using Pharmacy.API.Modules;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,14 +36,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped(typeof(NotFoundFilter<>));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
-builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
-builder.Services.AddScoped<IMedicineService, MedicineService>();
-builder.Services.AddScoped<ISuplierRepository, SuplierRepository>();
-builder.Services.AddScoped<ISuplierService, SuplierService>();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
@@ -49,6 +45,10 @@ builder.Services.AddDbContext<AppDbContext>(x =>
         option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
     });
 });
+
+builder.Host.UseServiceProviderFactory
+    (new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder => containerBuilder.RegisterModule(new RepoServiceModule()));
 
 var app = builder.Build();
 
