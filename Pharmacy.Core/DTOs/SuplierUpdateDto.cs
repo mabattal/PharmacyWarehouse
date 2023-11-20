@@ -10,6 +10,6 @@ namespace Pharmacy.Core.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int TaxNumber { get; set; }
+        public string TaxNumber { get; set; }
     }
 }

@@ -9,6 +9,6 @@ namespace Pharmacy.Core.DTOs
     public class SuplierDto : BaseDto
     {
         public string Name { get; set; }
-        public int TaxNumber { get; set; }
+        public string TaxNumber { get; set; }
     }
 }

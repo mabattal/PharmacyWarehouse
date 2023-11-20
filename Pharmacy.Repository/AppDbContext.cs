@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Pharmacy.Core.Models;
+using System.Reflection;
 
 namespace Pharmacy.Repository
 {
@@ -12,5 +13,12 @@ namespace Pharmacy.Repository
 
         public DbSet<Suplier> Categories { get; set; }
         public DbSet<Medicine> Products { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
