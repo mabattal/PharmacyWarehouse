@@ -12,6 +12,7 @@ namespace Pharmacy.Service.Mapping
             CreateMap<Medicine, MedicineDto>().ReverseMap();
             CreateMap<SuplierUpdateDto, Suplier>();
             CreateMap<MedicineUpdateDto, Medicine>();
+            CreateMap<Medicine, MedicineWithSuplierDto>();
         }
     }
 }

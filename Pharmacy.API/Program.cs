@@ -22,6 +22,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
 builder.Services.AddAutoMapper(typeof(MapProfile));
+builder.Services.AddScoped<IMedicineRepository, MedicineRepository>();
+builder.Services.AddScoped<IMedicineService, MedicineService>();
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {

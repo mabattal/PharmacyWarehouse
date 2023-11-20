@@ -11,8 +11,8 @@ namespace Pharmacy.Repository
 
         }
 
-        public DbSet<Suplier> Categories { get; set; }
-        public DbSet<Medicine> Products { get; set; }
+        public DbSet<Suplier> Supliers { get; set; }
+        public DbSet<Medicine> Medicines { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

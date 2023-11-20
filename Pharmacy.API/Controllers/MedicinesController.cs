@@ -13,11 +13,19 @@ namespace Pharmacy.API.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IService<Medicine> _service;
+        private readonly IMedicineService _medicineService;
 
-        public MedicinesController(IMapper mapper, IService<Medicine> service)
+        public MedicinesController(IMapper mapper, IService<Medicine> service, IMedicineService medicineService)
         {
             _mapper = mapper;
             _service = service;
+            _medicineService = medicineService;
+        }
+
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetMedicinesWithSuplier()
+        {
+            return CreateActionResult(await _medicineService.GetMedicineWithSuplier());
         }
 
         [HttpGet]
