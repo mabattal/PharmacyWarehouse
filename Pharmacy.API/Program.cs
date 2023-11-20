@@ -5,6 +5,8 @@ using Pharmacy.Repository.Repositories;
 using Pharmacy.Repository.UnitOfWorks;
 using Pharmacy.Repository;
 using System.Reflection;
+using Pharmacy.Core.Services;
+using Pharmacy.Service.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-//builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
+builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
 
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
