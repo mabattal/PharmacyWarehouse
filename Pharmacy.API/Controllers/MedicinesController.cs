@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacy.API.Filters;
 using Pharmacy.Core.DTOs;
 using Pharmacy.Core.Models;
 using Pharmacy.Core.Services;
@@ -34,6 +34,7 @@ namespace Pharmacy.API.Controllers
             return CreateActionResult(CustomResponseDto<List<MedicineDto>>.Successs(200, medicinesDtos));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<Medicine>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -57,6 +58,7 @@ namespace Pharmacy.API.Controllers
             return CreateActionResult(CustomResponseDto<NoContentDto>.Successs(204));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter<Medicine>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {

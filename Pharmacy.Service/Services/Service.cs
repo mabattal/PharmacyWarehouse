@@ -2,7 +2,6 @@
 using Pharmacy.Core.Repositories;
 using Pharmacy.Core.Services;
 using Pharmacy.Core.UnitOfWorks;
-using Pharmacy.Service.Exceptions;
 using System.Linq.Expressions;
 
 namespace Pharmacy.Service.Services
@@ -44,14 +43,7 @@ namespace Pharmacy.Service.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            var hasEntity = await _repository.GetByIdAsync(id);
-
-            if (hasEntity == null)
-            {
-                throw new NotFoundException($"{typeof(T).Name}({id}) not found.");
-            }
-
-            return hasEntity;
+            return await _repository.GetByIdAsync(id);
         }
 
         public async Task RemoveAsyn(T entity)

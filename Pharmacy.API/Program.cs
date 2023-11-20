@@ -12,7 +12,6 @@ using FluentValidation.AspNetCore;
 using Pharmacy.Service.Validations;
 using Pharmacy.API.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Pharmacy.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +32,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped(typeof(NotFoundFilter<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>),typeof(Service<>));
@@ -60,8 +60,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-app.UseCustomException();
 
 app.UseAuthorization();
 
