@@ -14,6 +14,8 @@ namespace Pharmacy.Service.Mapping
             CreateMap<MedicineUpdateDto, Medicine>();
             CreateMap<Medicine, MedicineWithSuplierDto>();
             CreateMap<Suplier, SuplierWithMedicinesDto>();
+            CreateMap<MedicineCreateDto, Medicine>();
+            CreateMap<SuplierCreateDto, Suplier>();
         }
     }
 }

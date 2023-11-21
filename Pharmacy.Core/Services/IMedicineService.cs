@@ -1,15 +1,13 @@
 ﻿using Pharmacy.Core.DTOs;
 using Pharmacy.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pharmacy.Core.Services
 {
-    public interface IMedicineService : IService<Medicine>
+    public interface IMedicineService : IService<Medicine, MedicineDto>
     {
         Task<CustomResponseDto<List<MedicineWithSuplierDto>>> GetMedicineWithSuplier();
+        Task<CustomResponseDto<NoContentDto>> UpdateAsync(MedicineUpdateDto dto);
+
+        Task<CustomResponseDto<MedicineDto>> AddAsync(MedicineCreateDto dto);
     }
 }
