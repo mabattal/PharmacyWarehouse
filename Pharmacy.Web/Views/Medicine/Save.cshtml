@@ -14,7 +14,10 @@
 
             <div class="form-group">
                 <label asp-for="SuplierId"></label>
-                <select asp-for="SuplierId" asp-items="ViewBag.supliers" class="form-control"></select>
+                <select asp-for="SuplierId" asp-items="ViewBag.supliers" class="form-control">
+                    <option value="">Lütfen seçiniz</option>
+                </select>
+                <span asp-validation-for="SuplierId" class="text-danger"></span>
             </div>
 
             <div class="form-group">

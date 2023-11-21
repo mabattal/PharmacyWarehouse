@@ -1,9 +1,11 @@
+using FluentValidation.AspNetCore;
+using Pharmacy.Service.Validations;
 using Pharmacy.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<MedicineDtoValidator>());
 
 builder.Services.AddHttpClient<SuplierApiService>(opt =>
 {
@@ -34,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Medicine}/{action=Index}");
 
 app.Run();
