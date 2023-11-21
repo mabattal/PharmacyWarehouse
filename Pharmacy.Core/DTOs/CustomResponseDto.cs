@@ -12,12 +12,12 @@ namespace Pharmacy.Core.DTOs
 
 
 
-        public static CustomResponseDto<T> Successs(int statusCode, T data)
+        public static CustomResponseDto<T> Success(int statusCode, T data)
         {
             return new CustomResponseDto<T> { StatusCode = statusCode, Data = data, Errors = null };
         }
 
-        public static CustomResponseDto<T> Successs(int statusCode)
+        public static CustomResponseDto<T> Success(int statusCode)
         {
             return new CustomResponseDto<T> { StatusCode = statusCode };
         }

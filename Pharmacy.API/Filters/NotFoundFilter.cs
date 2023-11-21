@@ -3,16 +3,17 @@ using Microsoft.AspNetCore.Mvc;
 using Pharmacy.Core.DTOs;
 using Pharmacy.Core.Models;
 using Pharmacy.Core.Services;
+using Pharmacy.Core.Repositories;
 
 namespace Pharmacy.API.Filters
 {
     public class NotFoundFilter<T> : IAsyncActionFilter where T : BaseEntity
     {
-        private readonly IService<T> _service;
+        private readonly IGenericRepository<T> _repository;
 
-        public NotFoundFilter(IService<T> service)
+        public NotFoundFilter(IGenericRepository<T> repository)
         {
-            _service = service;
+            _repository = repository;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -26,7 +27,7 @@ namespace Pharmacy.API.Filters
             }
 
             var id = (int)idValue;
-            var anyEntity = await _service.AnyAsync(x => x.Id == id);
+            var anyEntity = await _repository.AnyAsync(x => x.Id == id);
 
             if (anyEntity)
             {

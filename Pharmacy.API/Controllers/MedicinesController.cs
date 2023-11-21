@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Pharmacy.API.Filters;
 using Pharmacy.Core.DTOs;
 using Pharmacy.Core.Models;
@@ -7,16 +6,12 @@ using Pharmacy.Core.Services;
 
 namespace Pharmacy.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class MedicinesController : CustomBaseController
     {
-        private readonly IMapper _mapper;
         private readonly IMedicineService _medicineService;
 
-        public MedicinesController(IMapper mapper, IMedicineService medicineService)
+        public MedicinesController(IMedicineService medicineService)
         {
-            _mapper = mapper;
             _medicineService = medicineService;
         }
 
@@ -29,42 +24,51 @@ namespace Pharmacy.API.Controllers
         [HttpGet]
         public async Task<IActionResult> All()
         {
-            var medicines = await _medicineService.GetAllAsync();
-            var medicinesDtos = _mapper.Map<List<MedicineDto>>(medicines.ToList());
-            return CreateActionResult(CustomResponseDto<List<MedicineDto>>.Successs(200, medicinesDtos));
+            return CreateActionResult(await _medicineService.GetAllAsync());
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Medicine>))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var medicine = await _medicineService.GetByIdAsync(id);
-            var medicinesDto = _mapper.Map<MedicineDto>(medicine);
-            return CreateActionResult(CustomResponseDto<MedicineDto>.Successs(200, medicinesDto));
+            return CreateActionResult(await _medicineService.GetByIdAsync(id));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save(MedicineDto medicineDto)
+        public async Task<IActionResult> Save(MedicineCreateDto medicineDto)
         {
-            var medicine = await _medicineService.AddAsync(_mapper.Map<Medicine>(medicineDto));
-            var medicinesDto = _mapper.Map<MedicineDto>(medicine);
-            return CreateActionResult(CustomResponseDto<MedicineDto>.Successs(201, medicinesDto));
+            return CreateActionResult(await _medicineService.AddAsync(medicineDto));
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(MedicineUpdateDto medicineUpdateDto)
+        public async Task<IActionResult> Update(MedicineUpdateDto medicineDto)
         {
-            await _medicineService.UpdateAsync(_mapper.Map<Medicine>(medicineUpdateDto));
-            return CreateActionResult(CustomResponseDto<NoContentDto>.Successs(204));
+            return CreateActionResult(await _medicineService.UpdateAsync(medicineDto));
         }
 
         [ServiceFilter(typeof(NotFoundFilter<Medicine>))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
-            var medicine = await _medicineService.GetByIdAsync(id);
-            await _medicineService.RemoveAsyn(medicine);
-            return CreateActionResult(CustomResponseDto<NoContentDto>.Successs(204));
+            return CreateActionResult(await _medicineService.RemoveAsync(id));
+        }
+
+        [HttpPost("SaveAll")]
+        public async Task<IActionResult> SaveAll(List<MedicineDto> medicinesDtos)
+        {
+            return CreateActionResult(await _medicineService.AddRangeAsync(medicinesDtos));
+        }
+
+        [HttpDelete("RemoveAll")]
+        public async Task<IActionResult> RemoveAll(List<int> ids)
+        {
+            return CreateActionResult(await _medicineService.RemoveRangeAsync(ids));
+        }
+
+        [HttpDelete("Any/{id}")]
+        public async Task<IActionResult> Any(int id)
+        {
+            return CreateActionResult(await _medicineService.AnyAsync(x => x.Id == id));
         }
     }
 }

@@ -1,35 +1,17 @@
-using Microsoft.EntityFrameworkCore;
-using Pharmacy.Core.Repositories;
-using Pharmacy.Core.UnitOfWorks;
-using Pharmacy.Repository.Repositories;
-using Pharmacy.Repository.UnitOfWorks;
-using Pharmacy.Repository;
-using System.Reflection;
-using Pharmacy.Core.Services;
-using Pharmacy.Service.Services;
-using Pharmacy.Service.Mapping;
-using FluentValidation.AspNetCore;
-using Pharmacy.Service.Validations;
-using Pharmacy.API.Filters;
-using Microsoft.AspNetCore.Mvc;
-using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using Pharmacy.API.Filters;
 using Pharmacy.API.Modules;
+using Pharmacy.Repository;
+using Pharmacy.Service.Mapping;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(options => options.Filters.Add(new ValidatorFilterAttribute())).AddFluentValidation(x =>
-{
-    x.RegisterValidatorsFromAssemblyContaining<MedicineDtoValidator>();
-    x.RegisterValidatorsFromAssemblyContaining<SuplierDtoValidator>();
-});
-
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-    options.SuppressModelStateInvalidFilter = true;
-});
+builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
