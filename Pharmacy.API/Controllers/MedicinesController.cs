@@ -18,7 +18,7 @@ namespace Pharmacy.API.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetMedicinesWithSuplier()
         {
-            return CreateActionResult(await _medicineService.GetMedicineWithSuplier());
+            return CreateActionResult(await _medicineService.GetMedicinesWithSuplierAsync());
         }
 
         [HttpGet]

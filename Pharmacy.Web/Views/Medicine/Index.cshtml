@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@model List<MedicineWithSuplierDto>
+
+<h1>Medicines</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Barcode</td>
+            <td>Name</td>
+            <td>Price</td>
+            <td>Stock</td>
+            <td>Suplier</td>
+            <td>CreatedDate</td>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Barcode</td>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.Stock</td>
+                <td>@item.Suplier.Name</td>
+                <td>@item.CreatedDate</td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

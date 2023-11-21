@@ -26,7 +26,7 @@ namespace Pharmacy.Service.Services
             return CustomResponseDto<MedicineDto>.Success(StatusCodes.Status200OK, newDto);
         }
 
-        public async Task<CustomResponseDto<List<MedicineWithSuplierDto>>> GetMedicineWithSuplier()
+        public async Task<CustomResponseDto<List<MedicineWithSuplierDto>>> GetMedicinesWithSuplierAsync()
         {
             var medicines = await _medicineRepository.GetMedicineWithSuplier();
             var medicinesDto = _mapper.Map<List<MedicineWithSuplierDto>>(medicines);
