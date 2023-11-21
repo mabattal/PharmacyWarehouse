@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Pharmacy.Core.DTOs;
 using Pharmacy.Web.Services;
 
 namespace Pharmacy.Web.Controllers
@@ -17,6 +19,22 @@ namespace Pharmacy.Web.Controllers
             return View(await _suplierApiService.GetAllAsync());
         }
 
+        public async Task<IActionResult> Save()
+        {           
 
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save(SuplierDto suplierDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _suplierApiService.SaveAsync(suplierDto);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
     }
 }

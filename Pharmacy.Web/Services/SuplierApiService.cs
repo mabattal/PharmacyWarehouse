@@ -15,5 +15,17 @@ namespace Pharmacy.Web.Services
             var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<List<SuplierDto>>>("supliers");
             return response.Data;
         }
+
+        public async Task<SuplierDto> SaveAsync(SuplierDto newSuplier)
+        {
+            var response = await _httpClient.PostAsJsonAsync("supliers", newSuplier);
+
+            if (!response.IsSuccessStatusCode) return null;
+
+            var responseBody = await response.Content.ReadFromJsonAsync<CustomResponseDto<SuplierDto>>();
+
+            return responseBody.Data;
+
+        }
     }
 }
