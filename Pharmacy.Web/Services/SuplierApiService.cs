@@ -27,5 +27,26 @@ namespace Pharmacy.Web.Services
             return responseBody.Data;
 
         }
+
+        public async Task<bool> UpdateAsync(SuplierDto suplier)
+        {
+            var response = await _httpClient.PutAsJsonAsync("supliers", suplier);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<SuplierDto> GetByIdAsync(int id)
+        {
+            var response = await _httpClient.GetFromJsonAsync<CustomResponseDto<SuplierDto>>($"supliers/{id}");
+
+            return response.Data;
+        }
+
+        public async Task<bool> RemoveAsync(int id)
+        {
+            var response = await _httpClient.DeleteAsync($"supliers/{id}");
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }

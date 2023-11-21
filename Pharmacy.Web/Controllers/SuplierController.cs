@@ -36,5 +36,28 @@ namespace Pharmacy.Web.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            return View(await _suplierApiService.GetByIdAsync(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(SuplierDto suplierDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _suplierApiService.UpdateAsync(suplierDto);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(suplierDto);
+        }
+
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _suplierApiService.RemoveAsync(id);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
