@@ -1,17 +1,17 @@
 ﻿
 @{
-    ViewData["Title"] = "Save";
+    ViewData["Title"] = "Update";
 }
 
-@model MedicineCreateDto
-<h1>Save Medicine</h1>
+@model MedicineDto
+<h1>Update Medicine</h1>
 
 <div class="row">
 
     <div class=col-md-6>
 
-        <form asp-action="Save" method="post" asp-controller="Medicine">
-
+        <form asp-action="Update" method="post" asp-controller="Medicine">
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="SuplierId"></label>
                 <select asp-for="SuplierId" asp-items="ViewBag.supliers" class="form-control">
@@ -46,7 +46,7 @@
 
             <div class="form-group">
 
-                <input type="submit" value="Save" class="btn-primary" />
+                <input type="submit" value="Update" class="btn-primary" />
 
             </div>
         </form>
