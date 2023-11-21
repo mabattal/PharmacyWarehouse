@@ -7,8 +7,28 @@ namespace Pharmacy.Service.Validations
     {
         public SuplierDtoValidator()
         {
-            RuleFor(x => x.Name).NotNull().WithMessage("{PropertyName} is requared.").NotEmpty().WithMessage("{PropertyName} is requared.");
-            RuleFor(x => x.TaxNumber).NotNull().WithMessage("{PropertyName} is requared.").NotEmpty().WithMessage("{PropertyName} is requared.").Length(10).WithMessage("{PropertyName} length is must equal 10.");
+            RuleFor(x => x.Name)
+                .NotEmpty().WithMessage("{PropertyName} is required.");
+
+            RuleFor(x => x.TaxNumber)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .Must(BeNumeric).WithMessage("Enter numbers only.")
+                .Length(10).WithMessage("{PropertyName} length must be equal to 10.");
+        }
+
+        private bool BeNumeric(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return false;
+            }
+
+            if (long.TryParse(value.Trim(), out _))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
